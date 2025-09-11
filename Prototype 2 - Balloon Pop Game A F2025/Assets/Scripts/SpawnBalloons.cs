@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpawnBalloons : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] balloons;
+    private GameObject[] balloons;
     float spawnTimer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
