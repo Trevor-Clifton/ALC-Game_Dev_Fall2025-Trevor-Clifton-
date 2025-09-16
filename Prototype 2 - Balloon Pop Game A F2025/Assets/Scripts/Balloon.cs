@@ -18,6 +18,15 @@ public class Balloon : MonoBehaviour
         scoreTracker = GameObject.Find("Score");
     }
 
+    void Update()
+    {
+        if (transform.position.y >= 6.27f)
+        {
+            scoreTracker.GetComponent<ScoreTracker>().UpdateScore(-scoreToGive);
+            Destroy(gameObject);
+        }
+    }
+
     void OnMouseDown()
     {
         clickToPop -= 1;
@@ -25,7 +34,7 @@ public class Balloon : MonoBehaviour
         if (clickToPop == 0)
         {
             //scoreManager.IncreaseScoreText(scoreToGive);
-            //Instantiate(popEffect, transform.position, transform.rotation);
+            Instantiate(popEffect, new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z), transform.rotation);
             scoreTracker.GetComponent<ScoreTracker>().UpdateScore(scoreToGive);
             Destroy(gameObject);
         }
