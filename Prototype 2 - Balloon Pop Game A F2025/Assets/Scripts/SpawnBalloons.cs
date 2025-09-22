@@ -9,7 +9,7 @@ public class SpawnBalloons : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        spawnTimer = 1f;
+        spawnTimer = 1.5f;
     }
 
     // Update is called once per frame
@@ -17,12 +17,12 @@ public class SpawnBalloons : MonoBehaviour
     {
         if (spawnTimer > 0)
         {
-            spawnTimer -= 1 * Time.deltaTime;
+            spawnTimer -= Time.deltaTime;
         }
         else
         {
-            Instantiate(balloons[Random.Range(0, 4)], new Vector3(Random.Range(-5f, 5f), -3, -3), Quaternion.identity);
-            spawnTimer = 1f;
+            Instantiate(balloons[Random.Range(0, 4)], new Vector3(Random.Range(-5f, 5f), -4, -3), Quaternion.identity);
+            spawnTimer = 1.5f;
         }
     }
 }
