@@ -34,7 +34,7 @@ public class Balloon : MonoBehaviour
         if (clickToPop == 0)
         {
             //scoreManager.IncreaseScoreText(scoreToGive);
-            Instantiate(popEffect, new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z), transform.rotation);
+            Instantiate(popEffect, new Vector3(transform.position.x, transform.position.y+1.25f, transform.position.z), transform.rotation);
             scoreTracker.GetComponent<ScoreTracker>().UpdateScore(scoreToGive);
             Destroy(gameObject);
         }
