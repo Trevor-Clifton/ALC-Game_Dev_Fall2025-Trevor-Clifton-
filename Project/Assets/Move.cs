@@ -29,7 +29,9 @@ public class Move : MonoBehaviour
             movement += Vector3.right * 5 * Time.deltaTime;
         }
         movement.Normalize();
+        float y = transform.position.y;
         transform.Translate(movement* 5 * Time.deltaTime);
+        transform.position = new Vector3(transform.position.x, y, transform.position.z);
         movement = Vector3.zero;
     }
 }
