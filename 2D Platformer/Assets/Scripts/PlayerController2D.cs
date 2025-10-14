@@ -16,7 +16,13 @@ public class PlayerController2D : MonoBehaviour
 
     public Rigidbody2D rig;
     public TextMeshProUGUI scoreText;
+
+    SpriteRenderer spriteRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+    }
     public void AddScore(int amount)
     {
         score += amount;
@@ -29,6 +35,14 @@ public class PlayerController2D : MonoBehaviour
     void FixedUpdate()
     {
         float moveInput = Input.GetAxisRaw("Horizontal");
+        if (moveInput < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
         rig.linearVelocity = new Vector2(moveInput * moveSpeed, rig.linearVelocity.y);
     }
     void Update()
