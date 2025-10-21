@@ -39,7 +39,7 @@ public class PlayerController2D : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
-        else
+        else if(moveInput > 0)
         {
             spriteRenderer.flipX = false;
         }
@@ -64,7 +64,7 @@ public class PlayerController2D : MonoBehaviour
             isGrounded = true;
         }
     }
-    void GameOver()
+    public void GameOver()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
