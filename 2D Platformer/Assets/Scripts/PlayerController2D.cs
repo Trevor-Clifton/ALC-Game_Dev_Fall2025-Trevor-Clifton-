@@ -6,6 +6,10 @@ using TMPro;
 
 public class PlayerController2D : MonoBehaviour
 {
+
+    bool walled = false;
+    private float moveInput;
+
     [Header("PLayer Settings")]
     public float moveSpeed;
     public float jumpForce;
@@ -34,23 +38,36 @@ public class PlayerController2D : MonoBehaviour
 
     void FixedUpdate()
     {
-        float moveInput = Input.GetAxisRaw("Horizontal");
+        moveInput = Input.GetAxisRaw("Horizontal");
         if (moveInput < 0)
         {
             spriteRenderer.flipX = true;
         }
-        else if(moveInput > 0)
+        else if (moveInput > 0)
         {
             spriteRenderer.flipX = false;
         }
-        rig.linearVelocity = new Vector2(moveInput * moveSpeed, rig.linearVelocity.y);
+        
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            isGrounded = false;
-            rig.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            if (isGrounded)
+            {
+                isGrounded = false;
+                rig.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
+            else if (walled)
+            {
+                print("did the thing");
+                rig.AddForce(new Vector2(-1, 1) * 5, ForceMode2D.Impulse);
+                walled = false;
+            }
+        }
+        if (!walled)
+        {
+            rig.linearVelocity = new Vector2(moveInput * moveSpeed, rig.linearVelocity.y);
         }
         if (transform.position.y < bottomBound)
         {
@@ -62,6 +79,10 @@ public class PlayerController2D : MonoBehaviour
         if (collision.GetContact(0).normal == Vector2.up)
         {
             isGrounded = true;
+        }
+        if(collision.gameObject.tag == "Wall")
+        {
+            walled = true;
         }
     }
     public void GameOver()
