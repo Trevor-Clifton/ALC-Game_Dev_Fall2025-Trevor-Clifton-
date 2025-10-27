@@ -8,6 +8,7 @@ public class PlayerController2D : MonoBehaviour
 {
 
     bool walled = false;
+    bool jumping = false;
     private float moveInput;
 
     [Header("PLayer Settings")]
@@ -25,7 +26,7 @@ public class PlayerController2D : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     public void AddScore(int amount)
     {
@@ -51,6 +52,10 @@ public class PlayerController2D : MonoBehaviour
     }
     void Update()
     {
+        if (isGrounded)
+        {
+            jumping = false;
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
@@ -60,12 +65,18 @@ public class PlayerController2D : MonoBehaviour
             }
             else if (walled)
             {
-                print("did the thing");
-                rig.AddForce(new Vector2(-1, 1) * 5, ForceMode2D.Impulse);
-                walled = false;
+                if (!spriteRenderer.flipX)
+                {
+                    rig.AddForce(new Vector2(-1, 1.25f) * 5, ForceMode2D.Impulse);
+                }
+                else
+                {
+                    rig.AddForce(new Vector2(1, 1.25f) * 5, ForceMode2D.Impulse);
+                }
+                jumping = true;
             }
         }
-        if (!walled)
+        if (!walled && !jumping)
         {
             rig.linearVelocity = new Vector2(moveInput * moveSpeed, rig.linearVelocity.y);
         }
@@ -80,9 +91,16 @@ public class PlayerController2D : MonoBehaviour
         {
             isGrounded = true;
         }
-        if(collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Wall")
         {
             walled = true;
+        }
+    }
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            walled = false;
         }
     }
     public void GameOver()
