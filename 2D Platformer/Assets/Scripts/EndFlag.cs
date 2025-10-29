@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class EndFlag : MonoBehaviour
 {
     public bool finalLevel;
-    public string nextLevelName;
+    public int nextLevelIndex = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,11 +14,11 @@ public class EndFlag : MonoBehaviour
         {
             if (finalLevel)
             {
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene("Menu");
             }
             else
             {
-                SceneManager.LoadScene(nextLevelName);
+                SceneManager.LoadScene(nextLevelIndex);
             }
         }
     }
