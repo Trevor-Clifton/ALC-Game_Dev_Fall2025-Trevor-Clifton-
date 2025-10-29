@@ -65,13 +65,14 @@ public class PlayerController2D : MonoBehaviour
             }
             else if (walled)
             {
+                rig.linearVelocity = Vector2.zero;
                 if (!spriteRenderer.flipX)
                 {
-                    rig.AddForce(new Vector2(-1, 1.25f) * 5, ForceMode2D.Impulse);
+                    rig.AddForce(new Vector2(-0.8f, 1.25f) * 5, ForceMode2D.Impulse);
                 }
                 else
                 {
-                    rig.AddForce(new Vector2(1, 1.25f) * 5, ForceMode2D.Impulse);
+                    rig.AddForce(new Vector2(0.8f, 1.25f) * 5, ForceMode2D.Impulse);
                 }
                 jumping = true;
             }
@@ -91,7 +92,7 @@ public class PlayerController2D : MonoBehaviour
         {
             isGrounded = true;
         }
-        if (collision.gameObject.tag == "Wall")
+        else if(collision.gameObject.tag == "Wall")
         {
             walled = true;
         }
